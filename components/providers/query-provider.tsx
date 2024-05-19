@@ -23,11 +23,11 @@ const getQueryClient = () => {
   }
 };
 
-interface ProvidersProps {
+type Props = {
   children: React.ReactNode;
-}
+};
 
-export const QueryProvider = ({ children }: ProvidersProps) => {
+export const QueryProvider = ({ children }: Props) => {
   const queryClient = getQueryClient();
 
   return (

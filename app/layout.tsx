@@ -2,7 +2,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { QueryProvider } from "@/providers/query-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { SheetProvider } from "@/components/providers/sheet-provider";
+import { Toaster } from "@/components/ui/sonner";
 import "@/styles/globals.css";
 
 const font = Inter({ subsets: ["latin"] });
@@ -12,16 +14,20 @@ export const metadata: Metadata = {
   icons: { icon: "/icon.svg" },
 };
 
-interface RootLayoutProps {
+type Props = {
   children: React.ReactNode;
-}
+};
 
-const RootLayout = ({ children }: RootLayoutProps) => {
+const RootLayout = ({ children }: Props) => {
   return (
     <ClerkProvider>
       <html>
         <body className={font.className}>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <SheetProvider />
+            <Toaster />
+            {children}
+          </QueryProvider>
         </body>
       </html>
     </ClerkProvider>
