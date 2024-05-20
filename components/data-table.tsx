@@ -25,6 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useConfirm } from "@/hooks/use-confirm";
 
 type Props<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
@@ -45,6 +46,11 @@ export const DataTable = <TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
+  const [ConfirmDialog, confirm] = useConfirm(
+    "Are you sure?",
+    "You are about to delete one or more accounts."
+  );
+
   const table = useReactTable({
     data,
     columns,
@@ -62,8 +68,19 @@ export const DataTable = <TData, TValue>({
     },
   });
 
+  const handleDelete = async () => {
+    const isConfirmed = await confirm();
+
+    if (isConfirmed) {
+      onDelete(table.getFilteredSelectedRowModel().rows);
+
+      table.resetRowSelection();
+    }
+  };
+
   return (
     <div>
+      <ConfirmDialog />
       <div className="flex items-center py-4">
         <Input
           placeholder={`Filter ${filterKey}...`}
@@ -71,7 +88,7 @@ export const DataTable = <TData, TValue>({
           onChange={(event) =>
             table.getColumn(filterKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="w-full lg:max-w-sm"
         />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <Button
@@ -79,6 +96,7 @@ export const DataTable = <TData, TValue>({
             variant="destructive"
             className="ml-auto font-normal text-xs"
             disabled={disabled}
+            onClick={handleDelete}
           >
             <Trash className="size-4 mr-2" />
             Delete ({table.getFilteredSelectedRowModel().rows.length})
