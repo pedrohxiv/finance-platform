@@ -3,12 +3,12 @@
 import { Row } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
 
+import { deleteAccounts } from "@/actions/delete-accounts";
+import { getAccounts } from "@/actions/get-accounts";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { deleteAccounts } from "@/queries/delete-accounts";
-import { getAccounts } from "@/queries/get-accounts";
 import { useNewAccountSheet } from "@/states/use-new-account-sheet";
 
 import { columns } from "./_components/columns";

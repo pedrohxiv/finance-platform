@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { createAccount } from "@/actions/create-account";
 import { AccountForm } from "@/components/forms/account-form";
 import {
   Sheet,
@@ -9,7 +10,6 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { insertAccountSchema } from "@/db/schema";
-import { createAccount } from "@/queries/create-account";
 import { useNewAccountSheet } from "@/states/use-new-account-sheet";
 
 const formSchema = insertAccountSchema.pick({ name: true });
@@ -20,7 +20,7 @@ export const NewAccountSheet = () => {
   const { isOpen, onClose } = useNewAccountSheet();
   const { isPending, mutate } = createAccount();
 
-  const onSubmit = (values: FormValues) => {
+  const handleSubmit = (values: FormValues) => {
     mutate(values, { onSuccess: () => onClose() });
   };
 
@@ -35,7 +35,7 @@ export const NewAccountSheet = () => {
         </SheetHeader>
         <AccountForm
           defaultValues={{ name: "" }}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
           disabled={isPending}
         />
       </SheetContent>

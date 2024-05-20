@@ -38,10 +38,18 @@ export const AccountForm = ({
     defaultValues,
   });
 
+  const handleSubmit = (values: FormValues) => {
+    onSubmit(values);
+  };
+
+  const handleDelete = () => {
+    onDelete?.();
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values: FormValues) => onSubmit(values))}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="space-y-4 pt-4"
       >
         <FormField
@@ -68,8 +76,8 @@ export const AccountForm = ({
             type="button"
             className="w-full"
             disabled={disabled}
-            onClick={() => {}}
-            variant="outline"
+            onClick={handleDelete}
+            variant="destructive"
           >
             <Trash2 className="size-4 mr-2" />
             Delete Account

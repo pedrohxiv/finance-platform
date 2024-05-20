@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { EditAccountSheet } from "@/components/sheets/edit-account-sheet";
 import { NewAccountSheet } from "@/components/sheets/new-account-sheet";
 
 export const SheetProvider = () => {
@@ -17,6 +18,7 @@ export const SheetProvider = () => {
 
   return (
     <>
+      <EditAccountSheet />
       <NewAccountSheet />
     </>
   );
