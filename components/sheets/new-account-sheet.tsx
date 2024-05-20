@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/sheet";
 import { insertAccountSchema } from "@/db/schema";
 import { createAccount } from "@/queries/create-account";
-import { useNewAccountState } from "@/states/use-new-account-state";
+import { useNewAccountSheet } from "@/states/use-new-account-sheet";
 
 const formSchema = insertAccountSchema.pick({ name: true });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export const NewAccountSheet = () => {
-  const { isOpen, onClose } = useNewAccountState();
+  const { isOpen, onClose } = useNewAccountSheet();
 
   const mutation = createAccount();
 
