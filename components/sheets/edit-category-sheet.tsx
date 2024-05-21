@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-import { deleteAccount } from "@/actions/delete-account";
-import { editAccount } from "@/actions/edit-account";
-import { getAccount } from "@/actions/get-account";
-import { AccountForm } from "@/components/forms/account-form";
+import { deleteCategory } from "@/actions/delete-category";
+import { editCategory } from "@/actions/edit-category";
+import { getCategory } from "@/actions/get-category";
+import { CategoryForm } from "@/components/forms/category-form";
 import {
   Sheet,
   SheetContent,
@@ -12,26 +12,26 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategorySchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useEditAccountSheet } from "@/states/use-edit-account-sheet";
+import { useEditCategorySheet } from "@/states/use-edit-category-sheet";
 
-const formSchema = insertAccountSchema.pick({ name: true });
+const formSchema = insertCategorySchema.pick({ name: true });
 
 type FormValues = z.infer<typeof formSchema>;
 
-export const EditAccountSheet = () => {
+export const EditCategorySheet = () => {
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
-    "You are about to delete this account."
+    "You are about to delete this category."
   );
 
-  const { id, isOpen, onClose } = useEditAccountSheet();
+  const { id, isOpen, onClose } = useEditCategorySheet();
 
-  const { data, isLoading } = getAccount(id);
-  const { isPending: editIsPending, mutate: editMutate } = editAccount(id);
+  const { data, isLoading } = getCategory(id);
+  const { isPending: editIsPending, mutate: editMutate } = editCategory(id);
   const { isPending: deleteIsPending, mutate: deleteMutate } =
-    deleteAccount(id);
+    deleteCategory(id);
 
   const defaultValues = data ? { name: data.name } : { name: "" };
 
@@ -53,8 +53,8 @@ export const EditAccountSheet = () => {
       <Sheet open={isOpen} onOpenChange={onClose}>
         <SheetContent className="space-y-4">
           <SheetHeader>
-            <SheetTitle>Edit Account</SheetTitle>
-            <SheetDescription>Edit an existing account.</SheetDescription>
+            <SheetTitle>Edit Category</SheetTitle>
+            <SheetDescription>Edit an existing category.</SheetDescription>
           </SheetHeader>
           {isLoading ? (
             <div className="space-y-4 pt-4">
@@ -64,7 +64,7 @@ export const EditAccountSheet = () => {
               <Skeleton className="h-10 w-full" />
             </div>
           ) : (
-            <AccountForm
+            <CategoryForm
               id={id}
               defaultValues={defaultValues}
               onSubmit={handleSubmit}

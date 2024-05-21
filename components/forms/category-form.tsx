@@ -12,9 +12,9 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategorySchema } from "@/db/schema";
 
-const formSchema = insertAccountSchema.pick({ name: true });
+const formSchema = insertCategorySchema.pick({ name: true });
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -26,7 +26,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const AccountForm = ({
+export const CategoryForm = ({
   id,
   defaultValues,
   onSubmit,
@@ -61,7 +61,7 @@ export const AccountForm = ({
               <FormControl>
                 <Input
                   disabled={disabled}
-                  placeholder="e.g. Cash, Bank, Credit Card"
+                  placeholder="e.g. Food, Travel, Rent"
                   {...field}
                 />
               </FormControl>
@@ -69,7 +69,7 @@ export const AccountForm = ({
           )}
         />
         <Button className="w-full" disabled={disabled}>
-          {id ? "Save changes" : "Create account"}
+          {id ? "Save changes" : "Create category"}
         </Button>
         {!!id && (
           <Button
@@ -80,7 +80,7 @@ export const AccountForm = ({
             variant="destructive"
           >
             <Trash2 className="size-4 mr-2" />
-            Delete account
+            Delete category
           </Button>
         )}
       </form>

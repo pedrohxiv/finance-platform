@@ -3,21 +3,21 @@
 import { Row } from "@tanstack/react-table";
 import { Plus } from "lucide-react";
 
-import { deleteAccounts } from "@/actions/delete-accounts";
-import { getAccounts } from "@/actions/get-accounts";
+import { deleteCategories } from "@/actions/delete-categories";
+import { getCategories } from "@/actions/get-categories";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useNewAccountSheet } from "@/states/use-new-account-sheet";
+import { useNewCategorySheet } from "@/states/use-new-category-sheet";
 
 import { columns } from "./_components/columns";
 
-const AccountsPage = () => {
-  const { onOpen } = useNewAccountSheet();
+const CategoriesPage = () => {
+  const { onOpen } = useNewCategorySheet();
 
-  const { data, isLoading } = getAccounts();
-  const { isPending, mutate } = deleteAccounts();
+  const { data, isLoading } = getCategories();
+  const { isPending, mutate } = deleteCategories();
 
   const handleDelete = <TData extends { id: string }>(rows: Row<TData>[]) => {
     const ids = rows.map((row) => row.original.id);
@@ -48,7 +48,7 @@ const AccountsPage = () => {
     <div className="max-w-screen-2xl mx-auto w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Accounts</CardTitle>
+          <CardTitle className="text-xl line-clamp-1">Categories</CardTitle>
           <Button size="sm" onClick={onOpen} disabled={isLoading || isPending}>
             <Plus className="size-4 mr-2" />
             Add new
@@ -68,4 +68,4 @@ const AccountsPage = () => {
   );
 };
 
-export default AccountsPage;
+export default CategoriesPage;

@@ -2,7 +2,7 @@
 
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
-import { deleteAccount } from "@/actions/delete-account";
+import { deleteCategory } from "@/actions/delete-category";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useEditAccountSheet } from "@/states/use-edit-account-sheet";
+import { useEditCategorySheet } from "@/states/use-edit-category-sheet";
 
 type Props = {
   id: string;
@@ -23,9 +23,9 @@ export const Actions = ({ id }: Props) => {
     "You are about to delete this account."
   );
 
-  const { onOpen } = useEditAccountSheet();
+  const { onOpen } = useEditCategorySheet();
 
-  const { isPending, mutate } = deleteAccount(id);
+  const { isPending, mutate } = deleteCategory(id);
 
   const handleDelete = async () => {
     const isConfirmed = await confirm();

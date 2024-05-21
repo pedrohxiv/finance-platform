@@ -3,11 +3,11 @@ import { z } from "zod";
 import { createAccount } from "@/actions/create-account";
 import { AccountForm } from "@/components/forms/account-form";
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
 } from "@/components/ui/sheet";
 import { insertAccountSchema } from "@/db/schema";
 import { useNewAccountSheet } from "@/states/use-new-account-sheet";
@@ -18,6 +18,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export const NewAccountSheet = () => {
   const { isOpen, onClose } = useNewAccountSheet();
+
   const { isPending, mutate } = createAccount();
 
   const handleSubmit = (values: FormValues) => {
