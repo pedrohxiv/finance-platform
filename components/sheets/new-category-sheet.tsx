@@ -21,7 +21,7 @@ export const NewCategorySheet = () => {
 
   const { isPending, mutate } = createCategory();
 
-  const handleSubmit = (values: FormValues) => {
+  const handleCreateCategory = (values: FormValues) => {
     mutate(values, { onSuccess: () => onClose() });
   };
 
@@ -36,7 +36,7 @@ export const NewCategorySheet = () => {
         </SheetHeader>
         <CategoryForm
           defaultValues={{ name: "" }}
-          onSubmit={handleSubmit}
+          onSubmit={handleCreateCategory}
           disabled={isPending}
         />
       </SheetContent>

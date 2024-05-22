@@ -3,11 +3,11 @@ import { z } from "zod";
 import { createAccount } from "@/actions/create-account";
 import { AccountForm } from "@/components/forms/account-form";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
 } from "@/components/ui/sheet";
 import { insertAccountSchema } from "@/db/schema";
 import { useNewAccountSheet } from "@/states/use-new-account-sheet";
@@ -21,7 +21,7 @@ export const NewAccountSheet = () => {
 
   const { isPending, mutate } = createAccount();
 
-  const handleSubmit = (values: FormValues) => {
+  const handleCreateAccount = (values: FormValues) => {
     mutate(values, { onSuccess: () => onClose() });
   };
 
@@ -36,7 +36,7 @@ export const NewAccountSheet = () => {
         </SheetHeader>
         <AccountForm
           defaultValues={{ name: "" }}
-          onSubmit={handleSubmit}
+          onSubmit={handleCreateAccount}
           disabled={isPending}
         />
       </SheetContent>
