@@ -30,8 +30,8 @@ export const NewTransactionSheet = () => {
     createCategory();
   const { isPending: transactionIsPending, mutate: transactionMutate } =
     createTransaction();
-  const { isLoading: accountsIsLoading, data: accountsData } = getAccounts();
-  const { isLoading: categoriesIsLoading, data: categoriesData } =
+  const { data: accountsData, isLoading: accountsIsLoading } = getAccounts();
+  const { data: categoriesData, isLoading: categoriesIsLoading } =
     getCategories();
 
   const accountOptions = (accountsData ?? []).map((account) => ({

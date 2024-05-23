@@ -2,7 +2,7 @@
 
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 
-import { deleteAccount } from "@/actions/delete-account";
+import { deleteTransaction } from "@/actions/delete-transaction";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useEditAccountSheet } from "@/states/use-edit-account-sheet";
+import { useEditTransactionSheet } from "@/states/use-edit-transaction-sheet";
 
 type Props = {
   id: string;
@@ -20,12 +20,12 @@ type Props = {
 export const Actions = ({ id }: Props) => {
   const [ConfirmDialog, confirm] = useConfirm(
     "Are you sure?",
-    "You are about to delete this account."
+    "You are about to delete this transaction."
   );
 
-  const { onOpen } = useEditAccountSheet();
+  const { onOpen } = useEditTransactionSheet();
 
-  const { isPending, mutate } = deleteAccount(id);
+  const { isPending, mutate } = deleteTransaction(id);
 
   const handleDelete = async () => {
     const isConfirmed = await confirm();

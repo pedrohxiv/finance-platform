@@ -59,8 +59,8 @@ const TransactionsPage = () => {
         <CardContent>
           <DataTable
             columns={columns}
-            data={[]}
-            filterKey="name"
+            data={data || []}
+            filterKey="payee"
             onDelete={handleDelete}
             disabled={isLoading || isPending}
           />
