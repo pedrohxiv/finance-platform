@@ -18,7 +18,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { insertTransactionSchema } from "@/db/schema";
 import { useConfirm } from "@/hooks/use-confirm";
-import { convertAmountFromMiliunits } from "@/lib/utils";
 import { useEditTransactionSheet } from "@/states/use-edit-transaction-sheet";
 
 const formSchema = insertTransactionSchema.omit({ id: true });
@@ -60,7 +59,7 @@ export const EditTransactionSheet = () => {
     ? {
         accountId: transactionData.accountId,
         categoryId: transactionData.categoryId,
-        amount: convertAmountFromMiliunits(transactionData.amount).toString(),
+        amount: transactionData.amount.toString(),
         date: transactionData.date
           ? new Date(transactionData.date)
           : new Date(),
