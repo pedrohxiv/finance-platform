@@ -42,11 +42,7 @@ const app = new Hono().get(
     const lastPeriodStart = subDays(startDate, periodLength);
     const lastPeriodEnd = subDays(endDate, periodLength);
 
-    const fetchFinancialData = async (
-      userId: string,
-      startDate: Date,
-      endDate: Date
-    ) => {
+    const fetchFinancialData = async (startDate: Date, endDate: Date) => {
       return await db
         .select({
           income:
@@ -64,22 +60,17 @@ const app = new Hono().get(
         .where(
           and(
             accountId ? eq(transactions.accountId, accountId) : undefined,
-            eq(accounts.userId, userId),
+            eq(accounts.userId, auth.userId),
             gte(transactions.date, startDate),
             lte(transactions.date, endDate)
           )
         );
     };
 
-    const [currentPeriod] = await fetchFinancialData(
-      auth.userId,
-      startDate,
-      endDate
-    );
+    const [currentPeriod] = await fetchFinancialData(startDate, endDate);
     const [lastPeriod] = await fetchFinancialData(
-      auth.userId,
-      startDate,
-      endDate
+      lastPeriodStart,
+      lastPeriodEnd
     );
 
     const incomeChange = calculatePercentageChange(
