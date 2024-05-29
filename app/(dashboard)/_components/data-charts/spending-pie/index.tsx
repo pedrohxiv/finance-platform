@@ -35,20 +35,20 @@ export const SpendingPie = ({ data = [] }: Props) => {
             <SelectValue placeholder="Chart type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="pie">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="pie" className="cursor-pointer">
+              <div className="flex items-center">
                 <PieChart className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Pie chart</p>
               </div>
             </SelectItem>
-            <SelectItem value="radar">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="radar" className="cursor-pointer">
+              <div className="flex items-center">
                 <Radar className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Rada chart</p>
               </div>
             </SelectItem>
-            <SelectItem value="radial">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="radial" className="cursor-pointer">
+              <div className="flex items-center">
                 <Target className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Radial chart</p>
               </div>

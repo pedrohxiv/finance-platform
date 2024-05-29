@@ -35,20 +35,20 @@ export const Chart = ({ data = [] }: Props) => {
             <SelectValue placeholder="Chart type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="area">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="area" className="cursor-pointer">
+              <div className="flex items-center">
                 <AreaChart className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Area chart</p>
               </div>
             </SelectItem>
-            <SelectItem value="line">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="line" className="cursor-pointer">
+              <div className="flex items-center">
                 <LineChart className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Line chart</p>
               </div>
             </SelectItem>
-            <SelectItem value="bar">
-              <div className="flex items-center cursor-pointer">
+            <SelectItem value="bar" className="cursor-pointer">
+              <div className="flex items-center">
                 <BarChart3 className="size-4 mr-2 shrink-0" />
                 <p className="line-clamp-1">Bar chart</p>
               </div>

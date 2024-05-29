@@ -1,17 +1,36 @@
 "use client";
 
 import { ClerkLoaded, ClerkLoading, UserButton, useUser } from "@clerk/nextjs";
-import { Menu } from "lucide-react";
+import { format, subDays } from "date-fns";
+import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import qs from "query-string";
 import { useState } from "react";
+import { DateRange } from "react-day-picker";
 import { useMedia } from "react-use";
 
+import { getAccounts } from "@/actions/get-accounts";
+import { getSummary } from "@/actions/get-summary";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn, formatDateRange } from "@/lib/utils";
 
 const routes = [
   { href: "/", label: "Overview" },
@@ -26,14 +45,67 @@ export const Header = () => {
 
   const { isLoaded, user } = useUser();
 
+  const { data, isLoading: accountsIsLoading } = getAccounts();
+  const { isLoading: summaryIsLoading } = getSummary();
+
   const isMobile = useMedia("(max-width: 1024px)", false);
+  const params = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+
+  const accountId = params.get("accountId");
+  const from = params.get("from") || "";
+  const to = params.get("to") || "";
+
+  const defaultTo = new Date();
+  const defaultFrom = subDays(defaultTo, 30);
+
+  const paramState = {
+    from: from ? new Date(from) : defaultFrom,
+    to: to ? new Date(to) : defaultTo,
+  };
+
+  const [date, setDate] = useState<DateRange | undefined>(paramState);
 
   const handleClick = (href: string) => {
     router.push(href);
 
     setIsOpen(false);
+  };
+
+  const handleChange = (newValue: string) => {
+    const query = { accountId: newValue, from, to };
+
+    if (newValue === "all") {
+      query.accountId = "";
+    }
+
+    const url = qs.stringifyUrl(
+      { url: pathname, query },
+      { skipNull: true, skipEmptyString: true }
+    );
+
+    router.push(url);
+  };
+
+  const pushToUrl = (dateRange: DateRange | undefined) => {
+    const query = {
+      accountId,
+      from: format(dateRange?.from || defaultFrom, "yyyy-MM-dd"),
+      to: format(dateRange?.to || defaultTo, "yyyy-MM-dd"),
+    };
+
+    const url = qs.stringifyUrl(
+      { url: pathname, query },
+      { skipNull: true, skipEmptyString: true }
+    );
+
+    router.push(url);
+  };
+
+  const handleReset = () => {
+    setDate(undefined);
+    pushToUrl(undefined);
   };
 
   return (
@@ -120,6 +192,77 @@ export const Header = () => {
           <p className="text-sm lg:text-base text-[#89B6FD]">
             This is your Financial Overview Report
           </p>
+        </div>
+        <div className="flex fle-col lg:flex-row items-center gap-y-2 lg:gap-y-0 lg:gap-x-2">
+          <Select
+            value={accountId || "all"}
+            onValueChange={handleChange}
+            disabled={accountsIsLoading || summaryIsLoading}
+          >
+            <SelectTrigger className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus:ring-offset-0 focus:ring-transparent outline-none text-white focus:bg-white/30 transition">
+              <SelectValue
+                placeholder="Select account"
+                className="cursor-pointer"
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All accounts</SelectItem>
+              {data?.map((account) => (
+                <SelectItem
+                  key={account.id}
+                  value={account.id}
+                  className="cursor-pointer"
+                >
+                  {account.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                disabled={accountsIsLoading || summaryIsLoading}
+                size="sm"
+                variant="outline"
+                className="lg:w-auto w-full h-9 rounded-md px-3 font-normal bg-white/10 hover:bg-white/20 hover:text-white border-none focus:ring-offset-0 focus:ring-transparent outline-none text-white focus:bg-white/30 transition"
+              >
+                <span>{formatDateRange(paramState)}</span>
+                <ChevronDown className="ml-2 size-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="lg:w-auto w-full p-0" align="start">
+              <Calendar
+                disabled={accountsIsLoading || summaryIsLoading}
+                initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={setDate}
+                numberOfMonths={2}
+              />
+              <div className="p-4 w-full flex items-center gap-x-2">
+                <PopoverClose asChild>
+                  <Button
+                    onClick={handleReset}
+                    disabled={!date?.from || !date?.to}
+                    className="w-full"
+                    variant="outline"
+                  >
+                    Reset
+                  </Button>
+                </PopoverClose>
+                <PopoverClose asChild>
+                  <Button
+                    onClick={() => pushToUrl(date)}
+                    disabled={!date?.from || !date?.to}
+                    className="w-full"
+                  >
+                    Apply
+                  </Button>
+                </PopoverClose>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
     </header>
