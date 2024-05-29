@@ -8,7 +8,7 @@ import {
   XAxis,
 } from "recharts";
 
-import { CustomTooltip } from "./custom-tooltip";
+import { TransactionTooltip } from "./transaction-tooltip";
 
 type Props = {
   data: { date: string; income: number; expenses: number }[];
@@ -27,7 +27,7 @@ export const LineVariant = ({ data }: Props) => {
           style={{ fontSize: "12px" }}
           tickMargin={16}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<TransactionTooltip />} />
         <Line
           dot={false}
           dataKey="income"
