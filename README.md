@@ -42,7 +42,61 @@ A Finance Platform é uma plataforma de serviços financeiros desenvolvida para 
 
 O projeto utiliza diversas dependências para garantir seu funcionamento suave:
 
-
+- `@clerk/backend`: ^1.1.5
+- `@clerk/nextjs`: ^5.0.12
+- `@hono/clerk-auth`: ^2.0.0
+- `@hono/zod-validator`: ^0.2.1
+- `@hookform/resolvers`: ^3.4.0
+- `@neondatabase/serverless`: ^0.9.3
+- `@paralleldrive/cuid2`: ^2.2.2
+- `@radix-ui/react-checkbox`: ^1.0.4
+- `@radix-ui/react-dialog`: ^1.0.5
+- `@radix-ui/react-dropdown-menu`: ^2.0.6
+- `@radix-ui/react-label`: ^2.0.2
+- `@radix-ui/react-popover`: ^1.0.7
+- `@radix-ui/react-select`: ^2.0.0
+- `@radix-ui/react-separator`: ^1.0.3
+- `@radix-ui/react-slot`: ^1.0.2
+- `@radix-ui/react-tooltip`: ^1.0.7
+- `@tanstack/react-query`: ^5.36.2
+- `@tanstack/react-table`: ^8.17.3
+- `class-variance-authority`: ^0.7.0
+- `clsx`: ^2.1.1
+- `date-fns`: ^3.6.0
+- `drizzle-orm`: ^0.30.10
+- `drizzle-zod`: ^0.5.1
+- `hono`: ^4.3.7
+- `lucide-react`: ^0.378.0
+- `next`: 14.2.3
+- `next-themes`: ^0.3.0
+- `query-string`: ^9.0.0
+- `react`: ^18.3.1
+- `react-countup`: ^6.5.3
+- `react-currency-input-field`: ^3.8.0
+- `react-day-picker`: ^8.10.1
+- `react-dom`: ^18.3.1
+- `react-hook-form`: ^7.51.4
+- `react-icons`: ^5.2.1
+- `react-papaparse`: ^4.4.0
+- `react-select`: ^5.8.0
+- `react-use`: ^17.5.0
+- `recharts`: ^2.12.7
+- `sonner`: ^1.4.41
+- `tailwind-merge`: ^2.3.0
+- `tailwindcss-animate`: ^1.0.7
+- `zod`: ^3.23.8
+- `zustand`: ^4.5.2
+- `@types/node`: ^20.12.12
+- `@types/react`: ^18.3.2
+- `@types/react-dom`: ^18.3.0
+- `dotenv`: ^16.4.5
+- `drizzle-kit`: ^0.21.2
+- `eslint`: ^8.57.0
+- `eslint-config-next`: 14.2.3
+- `postcss`: ^8.4.38
+- `tailwindcss`: ^3.4.3
+- `tsx`: ^4.11.0
+- `typescript`: ^5.4.5
 
 ## Como Executar o Projeto
 
@@ -59,7 +113,13 @@ yarn install
 4. Crie um arquivo `.env` na raiz do projeto com as seguintes chaves e seus respectivos valores:
 
 ```env
-
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=seu_valor_aqui
+CLERK_PUBLISHABLE_KEY=seu_valor_aqui
+CLERK_SECRET_KEY=seu_valor_aqui
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=seu_valor_aqui
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=seu_valor_aqui
+DATABASE_URL=seu_valor_aqui
+NEXT_PUBLIC_APP_URL=seu_valor_aqui
 ```
 
 Certifique-se de substituir `seu_valor_aqui` pelos valores corretos de cada chave.
